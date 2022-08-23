@@ -129,7 +129,3 @@ db.sqlite3
 db copy.sqlite3
 #static
 ./static
-
-
-git config user.email "pablo_guilherme02@hotmail.com"
-git config user.name "PabloSanttana"
