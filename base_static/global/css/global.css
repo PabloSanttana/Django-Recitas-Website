@@ -1,15 +1,33 @@
 :root {
     --font-primary: sans-serif;
     --font-headings: 'Roboto Slab', serif;
+    --color-title: #212529;
 }
 * {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
-}       
+    font-family: var(--font-primary);
+}  
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-headings);
+}
+p{
+    padding: 0px !important;
+}
 
 .font-roboto{
     font-family: var(--font-headings);
+}
+.color-title{
+    color: var(--color-title);
+    
 }
 .search{
     max-width: 600px;
@@ -19,4 +37,13 @@
 }
 .btn-search {
     border-radius: 0rem .25rem .25rem 0rem;
+}
+
+.text-decoration-none{
+    text-decoration:none !important;
+}
+
+.card-image{
+   width:300px;
+   height:300px;
 }
