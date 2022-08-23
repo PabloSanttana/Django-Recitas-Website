@@ -140,9 +140,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # classe do messages flash  do django para usar no css
 MESSAGE_TAGS = {
-    constants.DEBUG: 'message-debug',
-    constants.ERROR: 'message-error',
-    constants.SUCCESS: 'message-success',
-    constants.INFO: 'message-info',
-    constants.WARNING: 'message-warning',
+    constants.DEBUG: 'alert-secondary',
+    constants.ERROR: 'alert-danger',
+    constants.SUCCESS: 'alert-success',
+    constants.INFO: 'alert-info',
+    constants.WARNING: 'alert-warning',
 }

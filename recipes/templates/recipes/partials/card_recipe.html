@@ -1,7 +1,7 @@
 
     <div class="card ">
         {% if recipe.cover %}
-        <a class="text-decoration-none pointer"href="">
+        <a class="text-decoration-none pointer"href="{% url 'recipes:detail' recipe.slug %}">
             <img class="card-img-top " src="{{recipe.cover.url}}" alt="Card image cap">
         </a>
         {% endif %}
@@ -61,11 +61,22 @@
                 </div>
             </div>
         </div>
-        <footer class="bg-dark d-flex align-center justify-content-center py-2" >
-            <a class="text-white text-decoration-none" href="">
-                <i class="fas fa-eye"></i>
-                <span class="ml-2">ver mais...</span>
-            </a>
-        </footer>
-      </div>
+        {% if is_detail_page is not True %}
+            <footer class="bg-dark d-flex align-center justify-content-center py-2" >
+                <a class="text-white text-decoration-none" href="">
+                    <i class="fas fa-eye"></i>
+                    <span class="ml-2">ver mais...</span>
+                </a>
+            </footer>
+        {% endif %}
+        {% if is_detail_page is True %}
+            <div class="container py-3">
+                {% if recipe.preparation_steps_is_html is True %}
+                    {{recipe.preparation_steps|safe}}
+                {% else %}
+                    {{recipe.preparation_steps|linebreaksbr}}
+                {% endif %}
+            </div>
+        {% endif %}
+</div>
       

@@ -1,0 +1,9 @@
+{% if messages %}
+
+{% for message in messages %}
+    <div style="margin:0 auto" class="alert  {{message.tags}} search mb-1">
+                {{message}}
+    </div>
+{% endfor %}
+    
+{% endif %}
