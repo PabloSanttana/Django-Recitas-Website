@@ -1,24 +1,29 @@
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from recipes.models import Recipe
+from utils.pagnation import make_pagination
 
 # Create your views here.
 
+PER_PAGE = int(os.environ.get('PER_PAGE', 9))
+QTY_LINK_PAGE = int(os.environ.get('QTY_LINK_PAGE', 4))
+
 
 def recipe_home(request):
-    recites = Recipe.objects.filter(is_published=True).order_by('-id')
+    recipes = Recipe.objects.filter(is_published=True).order_by('-id')
+
+    page_obj, pagination_range = make_pagination(
+        request, recipes, PER_PAGE, QTY_LINK_PAGE)
 
     return render(request, 'recipes/pages/recipes_home.html', {
-        'recipes': recites
+        'recipes': page_obj,
+        'pagination_range': pagination_range
     })
 
 
 def recipe_detail(request, slug):
-    recipe = Recipe.objects.filter(slug=slug, is_published=True).first()
-
-    if recipe is None:
-        messages.error(request, 'Nenhuma receita encontrada.')
-        return redirect('recipes:home')
+    recipe = get_object_or_404(Recipe, slug=slug, is_published=True)
 
     return render(request, 'recipes/pages/recipes_detail.html', {
         'recipe': recipe,
