@@ -1,6 +1,8 @@
 import os
 from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
+from django.http import Http404
 from django.contrib import messages
+from django.db.models import Q
 from recipes.models import Recipe
 from utils.pagnation import make_pagination
 
@@ -42,4 +44,28 @@ def recipe_category(request, category_id):
         'recipes': page_obj,
         'pagination_range': pagination_range,
         'category_title': f'{recipes[0].category.title} - categoria'
+    })
+
+
+def recipe_search(request):
+    search_term = request.GET.get('search', '').strip()
+    if not search_term:
+        raise Http404()
+
+    recipes = Recipe.objects.filter(
+        Q(
+            Q(title__icontains=search_term) |
+            Q(description__icontains=search_term),
+        ),
+        is_published=True,
+    ).order_by('-id')
+
+    page_obj, pagination_range = make_pagination(
+        request, recipes, PER_PAGE, QTY_LINK_PAGE)
+
+    return render(request, 'recipes/pages/recipes_search.html', context={
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
+        'search': search_term,
+        'additional_url_query': f'&search={search_term}'
     })

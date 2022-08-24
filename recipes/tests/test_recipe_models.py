@@ -15,7 +15,7 @@ class RecipeModelTest(RecipeTestBase):
     def test_recipe_model_recipe_is_get_absolute_url(self):
         recipe = self.make_recipe()
         url = recipe.get_absolute_url()
-        self.assertEqual(f'/recipe/{recipe.slug}/', url)
+        self.assertEqual(f'/recipes/{recipe.slug}/', url)
 
     def test_recipe_model_recipe_slug_is_None(self):
         recipe = self.make_recipe(slug=None)
