@@ -1,12 +1,12 @@
 
     <div class="card ">
         {% if recipe.cover %}
-        <a class="text-decoration-none pointer"href="{% url 'recipes:detail' recipe.slug %}">
+        <a class="text-decoration-none pointer"href="{{recipe.get_absolute_url}}">
             <img class="card-img-top " src="{{recipe.cover.url}}" alt="Card image cap">
         </a>
         {% endif %}
         <div class="card-body">
-            <a class="text-decoration-none" href="">
+            <a class="text-decoration-none" href="{% url 'recipes:detail' recipe.slug %}">
                 <h5 class="card-title color-title">
                     {{recipe.title}}
                 </h5>
