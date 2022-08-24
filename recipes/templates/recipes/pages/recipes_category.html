@@ -1,0 +1,19 @@
+{% extends 'global/base.html' %}
+{% block title %}
+    {{category_title}}
+{% endblock title %}
+{% block content %}
+{% include 'global/partials/messages.html' %}
+<div class="row mt-4">
+    
+        {% for recipe in recipes %}
+            <div class="col-12 col-md-6 col-lg-4 mb-4 h-100">
+                {% include 'recipes/partials/card_recipe.html' %}
+            </div>
+        {% empty %}
+        <h1>Nenhuma receita encontrada</h1>
+        {% endfor %}
+   
+</div>
+  
+{% endblock content %}

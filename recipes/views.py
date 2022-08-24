@@ -1,5 +1,5 @@
 import os
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, get_list_or_404
 from django.contrib import messages
 from recipes.models import Recipe
 from utils.pagnation import make_pagination
@@ -29,4 +29,17 @@ def recipe_detail(request, slug):
         'recipe': recipe,
         'is_detail_page': True
 
+    })
+
+
+def recipe_category(request, category_id):
+    recipes = get_list_or_404(Recipe.objects.filter(
+        category__id=category_id, is_published=True).order_by('-id'))
+
+    page_obj, pagination_range = make_pagination(
+        request, recipes, PER_PAGE, QTY_LINK_PAGE)
+    return render(request, 'recipes/pages/recipes_category.html', {
+        'recipes': page_obj,
+        'pagination_range': pagination_range,
+        'category_title': f'{recipes[0].category.title} - categoria'
     })
