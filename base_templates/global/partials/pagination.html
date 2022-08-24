@@ -1,12 +1,12 @@
 {% if recipes.has_other_pages %}
-    <nav class="my-5" role="navigation"  aria-label="Pagination">
+    <nav  class="my-5 " role="navigation"  aria-label="Pagination">
         <ul style="margin:0 auto" 
             class="pagination d-flex justify-content-center align-items-center">
             {% if pagination_range.first_page_out_of_range %}
                 <li class="page-item">
                     <a 
                     aria-label="Go to page 1" 
-                    class="page-link page-item" 
+                    class="page-link page-item text-dark" 
                     href="?page=1{{additional_url_query}}">
                      1
                     </a>
@@ -21,7 +21,7 @@
                         <a
                         aria-label="Current page, {{page}}"
                         aria-current="True"
-                        class="page-link page-item active" 
+                        class="page-link page-item bg-dark text-white" 
                         href="?page={{page}}{{additional_url_query}}">
                             {{page}}
                         </a>
@@ -30,7 +30,7 @@
                     <li class="page-item">
                         <a
                         aria-label="Go to page {{page}}"
-                        class="page-link page-item" 
+                        class="page-link page-item text-dark" 
                         href="?page={{page}}{{additional_url_query}}"
                         >
                             {{page}}
@@ -46,7 +46,7 @@
                 <li class="page-item">
                     <a 
                     aria-label="Go to page {{pagination_range.total_pages}}" 
-                    class="page-link page-item" 
+                    class="page-link page-item text-dark" 
                     href="?page={{pagination_range.total_pages}}{{additional_url_query}}"
                     >
                     {{pagination_range.total_pages}}
