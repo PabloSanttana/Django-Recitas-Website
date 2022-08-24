@@ -2,6 +2,7 @@
 <div class="container">
     <div class=" d-flex align-items-center justify-content-center mt-5 mb-2">
         <form method="get"  action="{% url 'recipes:search' %}" id="searchForm" class=" d-flex w-100 search" >
+            {% csrf_token %}
             <input value="{{search}}" class="form-control   search-input" type="search" name="search" placeholder="Buscar receitas" aria-label="Search">
             <button class="btn btn-dark btn-search" type="submit"> <i class="fas fa-search" class="search-icon"></i></button>
         </form>

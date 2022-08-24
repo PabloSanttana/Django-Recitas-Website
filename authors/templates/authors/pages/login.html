@@ -1,0 +1,13 @@
+{% extends 'global/base.html' %}
+{% block title %}
+Login | User
+{%endblock %}
+
+{% block content %}
+   {% include 'global/partials/messages.html' %}
+    <h2 class="text-center">Login</h2>
+   
+    {% if not request.user.is_authenticated %}
+        {% include 'global/partials/form.html' %}
+    {% endif %}
+{% endblock content %}

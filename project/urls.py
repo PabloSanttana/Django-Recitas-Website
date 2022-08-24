@@ -23,7 +23,8 @@ from django.conf import settings  # importar settings da raiz do projeto
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("recipes.urls"))
+    path('', include("recipes.urls")),
+    path('authors/', include("authors.urls")),
 ]
 
 # confirguração para images

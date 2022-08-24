@@ -1,0 +1,42 @@
+<div class="">
+    <form class="Form mt-1"  action="{{form_action}}" method="POST" enctype="multipart/form-data">
+        <div class="form-content form-content-grid">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class=" {{field.field.widget.attrs.class}}">
+                    <label for="{{field.id_for_label}}">{{field.label}}</label>
+                    {{field}}
+
+                {% if field.help_text %}
+                    <p class="help-text">{{field.help_text}}</p>
+                {% endif %}
+                    {{ field.errors }}
+                </div>
+
+                {% if field.name == 'cover' and field.value.url %}
+                    <div class="span-2">
+                        <img src="{{ field.value.url }}" alt="Capa receita {{recipe.title}}"
+                    </div>
+                {% endif %}
+                
+            {% endfor %}
+           
+        </div>
+        {% if form.errors %}
+            <div class="form-content form-content-grid">
+                <div class=" span-2">
+                    <div class="alert alert-danger">
+                        Há erros no formulário, corrija-os e envie novamente.
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endif %}
+
+        <div class="form-content form-content-grid">
+            <div class="form-group">
+              <button type="submit " class="btn">Send</button>
+            </div>
+          </div>
+    </form>
+</div>
