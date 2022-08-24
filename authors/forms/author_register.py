@@ -98,6 +98,11 @@ class AuthorRegisterForm(forms.ModelForm):
             'email': 'E-mail',
 
         }
+        error_messages = {
+            'username': {
+                'required': 'This field is required',
+            }
+        }
 
     # validando campos clean_name = expecifico para aquele campo
     def clean_password(self):

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
-from authors.forms import AuthorRegisterForm, LoginForm
+from authors.forms import AuthorRegisterForm, LoginForm, UpdadeAuthorForm
 from django.http import Http404
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -64,3 +65,20 @@ def login_create(request):
         messages.error(request, 'Error to validate form data.')
 
     return redirect('authors:login')
+
+
+def profile_view(request):
+    user = User.objects.get(username=request.user.username)
+    form = UpdadeAuthorForm(
+        request.POST or None,
+        instance=user
+    )
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Edit with success.')
+        return redirect('authors:profile')
+
+    return render(request, 'authors/pages/profile.html', context={
+        'form': form,
+    })
