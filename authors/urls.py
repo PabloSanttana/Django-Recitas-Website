@@ -14,7 +14,14 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('logout/user/', views.logout_user, name='logout_user'),
 
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/profile', views.profile_view, name='profile'),
-
     path('dashboard/create', views.create_recipe, name='create_recipe'),
+    path('dashboard/recipe/<int:id>/edit/',
+         views.recipe_edit, name='recipe_edit'),
+    path('dashboard/recipe/delete/',
+         views.recipe_delete, name='recipe_delete'),
+
+
+
 ]

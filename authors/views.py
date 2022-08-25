@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from authors.forms import AuthorRegisterForm, LoginForm, UpdateAuthorForm
 from recipes.forms import RecipeForm
+from recipes.models import Recipe
 from django.http import Http404
 from django.contrib import messages
 from django.urls import reverse
@@ -122,3 +123,51 @@ def create_recipe(request):
         return redirect('authors:create_recipe')
 
     return render(request, 'authors/pages/create_recipe.html', {'form': form})
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard(request):
+    # fazer paginacao dps
+    recipes = Recipe.objects.filter(
+        author__username=request.user.username, is_published=False).order_by('-id')
+    return render(request, 'authors/pages/dashboard.html', context={
+        'recipes': recipes,
+    })
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def recipe_delete(request):
+    if not request.POST:
+        return redirect('authors:dashboard')
+
+    id = request.POST.get('id')
+    recipe = get_object_or_404(
+        Recipe, pk=id, is_published=False, author=request.user)
+
+    recipe.delete()
+    messages.success(request, 'Delete with success.')
+    return redirect('authors:dashboard')
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def recipe_edit(request, id):
+    recipe = get_object_or_404(
+        Recipe, pk=id, is_published=False, author=request.user)
+    form = RecipeForm(
+        request.POST or None,
+        files=request.FILES or None,
+        instance=recipe
+    )
+    if form.is_valid():
+        recipe = form.save(commit=False)
+        recipe.author = request.user
+        recipe.preparation_steps_is_html = False
+        recipe.is_published = False
+        recipe.save()
+        messages.success(request, 'Edit with success.')
+        return redirect(reverse('authors:recipe_edit', args=(id,)))
+
+    return render(request, 'authors/pages/create_recipe.html', context={
+        'form': form,
+        'title': 'Dashboard Recipe'
+    })
