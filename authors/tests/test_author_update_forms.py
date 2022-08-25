@@ -111,9 +111,13 @@ class AuthorUpdateFromIntegrationTest(djangoTestCase):
         )
         url = reverse('authors:profile')
 
-        self.form_data.update(username='Rafinha')
+        self.form_data["username"] = 'Rafinha'
+        self.form_data["email"] = 'Rafaela@gmail.com'
+
         response = self.client.post(url, data=self.form_data, follow=True)
         self.assertEqual(self.form_data.get('username'),
                          response.context['form'].initial['username'])
+        self.assertEqual(self.form_data.get('email'),
+                         response.context['form'].initial['email'])
         self.assertIn('Edit with success.',
                       response.content.decode('utf-8'))

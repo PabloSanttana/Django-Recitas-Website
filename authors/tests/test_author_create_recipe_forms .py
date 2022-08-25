@@ -3,6 +3,7 @@ from recipes.forms import RecipeForm
 from parameterized import parameterized
 from django.test import TestCase as djangoTestCase
 from django.urls import reverse
+from recipes.models import Category
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -59,7 +60,7 @@ class AuthorCreateRecipeIntegrationTest(djangoTestCase):
         }
         url = reverse('authors:register_create')
         self.client.post(url, data=form_data, follow=True)
-        # create a new image using PIL
+        # Create a new image using PIL
         im = Image.new(mode='RGB', size=(200, 200))
         im_io = BytesIO()  # a BytesIO object for saving image
         im.save(im_io, 'JPEG')  # save the image to im_io
@@ -67,7 +68,7 @@ class AuthorCreateRecipeIntegrationTest(djangoTestCase):
 
         image = InMemoryUploadedFile(
             im_io, None, 'random-name.jpg', 'image/jpeg', len(
-                im_io.getvalue()), None
+                im_io.getvalue()) * 1024 * 1024, None
         )
         self.form_data = {
             'title': 'Recipe Title',
@@ -80,6 +81,7 @@ class AuthorCreateRecipeIntegrationTest(djangoTestCase):
             'cover': image,
             'category': '1',
         }
+        Category.objects.create(title='Carnes')
         return super().setUp(*args, **kwargs)
 
     def login_user_default(self):
@@ -112,8 +114,8 @@ class AuthorCreateRecipeIntegrationTest(djangoTestCase):
         self.assertIn(message, response.context['form'].errors.get(field))
 
     @parameterized.expand([
-        ('title', 'This', 'Make sure the value is at least 4 characters'),
-        ('description', 'This', 'Make sure the value is at least'),
+        ('title', 'abc', 'Make sure the value is at least 4 characters'),
+        ('description', 'abc', 'Make sure the value is at least 4 characters'),
         ('preparation_time', '-1', 'Invalid number'),
         ('servings', '-1', 'Invalid number'),
     ])
@@ -123,5 +125,26 @@ class AuthorCreateRecipeIntegrationTest(djangoTestCase):
         self.form_data[field] = value
         response = self.client.post(
             url, data=self.form_data, follow=True)
-       # self.assertIn(message, response.content.decode('utf-8'))
+        self.assertIn(message, response.content.decode('utf-8'))
         self.assertIn(message, response.context['form'].errors.get(field))
+
+    @parameterized.expand([
+        ('title', 'Make sure the value is a maximum of 150 characters.',),
+        ('description', 'Make sure the value is a maximum of 150 characters.'),
+    ])
+    def test_fields_max_length(self, field, message):
+        self.login_user_default()
+        url = reverse('authors:create_recipe')
+        self.form_data[field] = "a"*151
+        response = self.client.post(
+            url, data=self.form_data, follow=True)
+        self.assertIn(message, response.content.decode('utf-8'))
+        self.assertIn(message, response.context['form'].errors.get(field))
+
+    def test_create_successful(self):
+        self.login_user_default()
+        url = reverse('authors:create_recipe')
+        response = self.client.post(
+            url, data=self.form_data, follow=True)
+        self.assertIn('Recipe create success.',
+                      response.content.decode('utf-8'))

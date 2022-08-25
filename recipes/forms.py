@@ -29,7 +29,7 @@ class RecipeForm(forms.ModelForm):
         error_messages={
             'required': 'This field is required',
             'min_length': 'Make sure the value is at least 4 characters',
-            'max_length': 'Make sure the value is a maximum of 10 characters.'
+            'max_length': 'Make sure the value is a maximum of 150 characters.'
         }
     )
     description = forms.CharField(
@@ -43,7 +43,7 @@ class RecipeForm(forms.ModelForm):
         error_messages={
             'required': 'This field is required',
             'min_length': 'Make sure the value is at least 4 characters',
-            'max_length': 'Make sure the value is a maximum of 10 characters.'
+            'max_length': 'Make sure the value is a maximum of 150 characters.'
         }
     )
 
@@ -109,6 +109,7 @@ class RecipeForm(forms.ModelForm):
 
     def clean_category(self):
         data = self.cleaned_data.get('category')
+
         if data is None:
             self._my_errors['category'].append('This field is required')
 
