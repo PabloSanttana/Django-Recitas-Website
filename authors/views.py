@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from authors.forms import AuthorRegisterForm, LoginForm, UpdateAuthorForm
+from recipes.forms import RecipeForm
 from django.http import Http404
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -67,6 +69,7 @@ def login_create(request):
     return redirect('authors:login')
 
 
+@login_required(login_url='authors:login', redirect_field_name='next')
 def profile_view(request):
     user = User.objects.get(username=request.user.username)
     form = UpdateAuthorForm(
@@ -84,11 +87,13 @@ def profile_view(request):
     })
 
 
+@login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(request):
 
     return render(request, 'authors/pages/logout.html')
 
 
+@login_required(login_url='authors:login', redirect_field_name='next')
 def logout_user(request):
     if not request.POST:
         return redirect('authors:login')
@@ -98,3 +103,22 @@ def logout_user(request):
 
     logout(request)
     return redirect('authors:login')
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def create_recipe(request):
+    form = RecipeForm(
+        request.POST or None,
+        files=request.FILES or None,
+    )
+
+    if form.is_valid():
+        recipe = form.save(commit=False)
+        recipe.author = request.user
+        recipe.preparation_steps_is_html = False
+        recipe.is_published = False
+        recipe.save()
+        messages.success(request, 'Recipe create success.')
+        return redirect('authors:create_recipe')
+
+    return render(request, 'authors/pages/create_recipe.html', {'form': form})

@@ -1,0 +1,15 @@
+{% extends 'global/base.html'%}
+{% block title %}
+    {{title}} | User
+{% endblock %}
+
+{% block content %}
+    <h2 class="text-center my-4">Criar Receitas</h2>
+    {% include 'global/partials/messages.html' %}
+
+    <div class="text-left">
+            {% include 'global/partials/form.html' %}
+    </div>
+        
+ 
+{% endblock content %}

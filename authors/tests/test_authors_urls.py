@@ -26,3 +26,7 @@ class AuthorRegisterUrlsTest(TestCase):
     def test_authors_logout_urls_is_correct(self):
         url = reverse('authors:logout')
         self.assertEqual(url, '/authors/logout/')
+
+    def test_authors_create_recipe_urls_is_correct(self):
+        url = reverse('authors:create_recipe')
+        self.assertEqual(url, '/authors/dashboard/create')
