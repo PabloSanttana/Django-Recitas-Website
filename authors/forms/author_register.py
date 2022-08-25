@@ -149,7 +149,7 @@ class AuthorRegisterForm(forms.ModelForm):
             }, code='invalid',)
 
 
-class UpdadeAuthorForm(forms.ModelForm):
+class UpdateAuthorForm(forms.ModelForm):
     # sobre escrevendo formulrios
     first_name = forms.CharField(
         error_messages={'required': 'Write your first name'},
@@ -176,7 +176,7 @@ class UpdadeAuthorForm(forms.ModelForm):
         label='E-mail',
         help_text='The e-mail must be valid',
         widget=forms.TextInput(attrs={
-            'placeholder': "'Ex.: email@example.com'"
+            'placeholder': "Ex.: email@example.com"
         })
     )
 
@@ -192,6 +192,13 @@ class UpdadeAuthorForm(forms.ModelForm):
         labels = {
             'username': 'Username',
             'email': 'E-mail',
+        }
+
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'placeholder': 'Type your username',
+
+            }),
         }
 
     def clean_email(self):

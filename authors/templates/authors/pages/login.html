@@ -5,7 +5,7 @@ Login | User
 
 {% block content %}
    {% include 'global/partials/messages.html' %}
-    <h2 class="text-center">Login</h2>
+    <h2 class="text-center my-4">Login</h2>
    
     {% if not request.user.is_authenticated %}
         {% include 'global/partials/form.html' %}

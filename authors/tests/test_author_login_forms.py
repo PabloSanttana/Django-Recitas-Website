@@ -70,3 +70,13 @@ class AuthorLoginFromIntegrationTest(djangoTestCase):
                       response.content.decode('utf-8'))
         self.assertIn(f'{username}',
                       response.content.decode('utf-8'))
+
+    def test_login_method_get_status_code_404_is_ok(self):
+        url = reverse('authors:login_create')
+        form_data = {
+            'username': self.form_data.get('username'),
+            'password': self.form_data.get('password')
+        }
+        response = self.client.get(url, data=form_data, follow=True)
+
+        self.assertEqual(404, response.status_code)

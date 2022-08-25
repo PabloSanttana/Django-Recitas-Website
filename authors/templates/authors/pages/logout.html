@@ -1,0 +1,26 @@
+{% extends 'global/base.html' %}
+{% block title %}
+Logout | User
+{%endblock %}
+
+{% block content %}
+        <h2 class="text-center my-4"></h2>
+        {% if request.user.is_authenticated %}
+            <br>
+            <div class="container">
+                <form action="{% url 'authors:logout_user' %}"  method="POST">
+                    {% csrf_token %}
+                    <p class="text-center">Are you sure you want to quit ? </p>
+                    <br>
+                    <br>
+                    <input type="hidden" name="username" value="{{ request.user.username }}">
+                    <div class="form-content text-center">
+                        <div class="form-group">
+                            <button class="btn"type="submit">Logout</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+
+{% endblock content %}

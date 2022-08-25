@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from authors.forms import AuthorRegisterForm, LoginForm, UpdadeAuthorForm
+from authors.forms import AuthorRegisterForm, LoginForm, UpdateAuthorForm
 from django.http import Http404
 from django.contrib import messages
 from django.urls import reverse
@@ -57,7 +57,7 @@ def login_create(request):
         if authenticated_user is not None:
             messages.success(request, 'Your are logged in.')
             login(request, authenticated_user)
-            return redirect('authors:login')
+            return redirect('authors:profile')
         else:
             messages.error(request, 'Invalid credentials.')
 
@@ -69,7 +69,7 @@ def login_create(request):
 
 def profile_view(request):
     user = User.objects.get(username=request.user.username)
-    form = UpdadeAuthorForm(
+    form = UpdateAuthorForm(
         request.POST or None,
         instance=user
     )
@@ -82,3 +82,19 @@ def profile_view(request):
     return render(request, 'authors/pages/profile.html', context={
         'form': form,
     })
+
+
+def logout_view(request):
+
+    return render(request, 'authors/pages/logout.html')
+
+
+def logout_user(request):
+    if not request.POST:
+        return redirect('authors:login')
+
+    if request.POST.get('username') != request.user.username:
+        return redirect('authors:login')
+
+    logout(request)
+    return redirect('authors:login')

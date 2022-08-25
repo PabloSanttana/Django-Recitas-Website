@@ -131,6 +131,12 @@ class AuthorRegisterFormIntegrationTest(djangoTestCase):
         self.assertIn(message, response.context['form'].errors.get('email'))
         self.assertIn(message, response.content.decode('utf-8'))
 
+    def test_method_get_status_code_404_is_ok(self):
+        url = reverse('authors:register_create')
+        response = self.client.get(url, data=self.form_data, follow=True)
+
+        self.assertEqual(response.status_code, 404)
+
     def test_authors_create_can_login(self):
         url = reverse('authors:register_create')
         # registrendo formualrio
