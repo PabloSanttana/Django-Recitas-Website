@@ -138,10 +138,17 @@ p{
     grid-column: span 2;
 }
 
+.form-container{
+    max-width: 750px;
+    margin: 0 auto;
+    margin-bottom:50px;
+    padding: 1rem;
+}
 
 @media (max-width: 600px) {
    
     .form-content-grid {
+        display: block;
         grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
     }
 }
