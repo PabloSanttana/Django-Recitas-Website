@@ -30,3 +30,11 @@ class AuthorRegisterUrlsTest(TestCase):
     def test_authors_create_recipe_urls_is_correct(self):
         url = reverse('authors:create_recipe')
         self.assertEqual(url, '/authors/dashboard/create')
+
+    def test_authors_edit_recipe_urls_is_correct(self):
+        url = reverse('authors:recipe_edit', kwargs={'id': '105'})
+        self.assertEqual(url, '/authors/dashboard/recipe/105/edit/')
+
+    def test_authors_list_recipe_urls_is_correct(self):
+        url = reverse('authors:dashboard')
+        self.assertEqual(url, '/authors/dashboard/')

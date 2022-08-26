@@ -7,7 +7,11 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from utils.pagnation import make_pagination
 from django.contrib.auth.models import User
+import os
+PER_PAGE = int(os.environ.get('PER_PAGE', 9))
+QTY_LINK_PAGE = int(os.environ.get('QTY_LINK_PAGE', 4))
 
 # Create your views here.
 
@@ -130,8 +134,13 @@ def dashboard(request):
     # fazer paginacao dps
     recipes = Recipe.objects.filter(
         author__username=request.user.username, is_published=False).order_by('-id')
-    return render(request, 'authors/pages/dashboard.html', context={
-        'recipes': recipes,
+
+    page_obj, pagination_range = make_pagination(
+        request, recipes, PER_PAGE, QTY_LINK_PAGE)
+
+    return render(request, 'authors/pages/dashboard.html', {
+        'recipes': page_obj,
+        'pagination_range': pagination_range
     })
 
 
