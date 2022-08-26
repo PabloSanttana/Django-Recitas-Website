@@ -178,5 +178,5 @@ def recipe_edit(request, id):
 
     return render(request, 'authors/pages/create_recipe.html', context={
         'form': form,
-        'title': 'Dashboard Recipe'
+
     })
