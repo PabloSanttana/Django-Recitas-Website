@@ -9,5 +9,8 @@ Login | User
    
     {% if not request.user.is_authenticated %}
         {% include 'global/partials/form.html' %}
+    {% else %}
+    <div style="margin: 0 auto"  class="search alert alert-success">
+        you are logged in.</div>
     {% endif %}
 {% endblock content %}

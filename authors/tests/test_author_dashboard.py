@@ -1,10 +1,5 @@
 from django.urls import reverse
-from PIL import Image
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from recipes.tests.test_recipe_base import RecipeTestBase
-
-# simulando um cadastro
 
 
 class AuthorDashboardIntegrationTest(RecipeTestBase):
