@@ -17,19 +17,19 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{request.user}}
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item text-dark" href="{% url 'authors:profile'%}">Perfil</a>
-                        <a class="dropdown-item text-dark" href="{% url 'authors:dashboard'%}">Dashboard</a>
-                        <a class="dropdown-item text-dark" href="{% url 'authors:create_recipe'%}">Criar Receitas</a>
-                        <a class="dropdown-item text-dark" href="{% url 'authors:logout'%}">Logout</a>
+                        <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:profile'%}">Perfil</a>
+                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:dashboard'%}">Dashboard</a>
+                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:create_recipe'%}">Criar Receitas</a>
+                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:logout'%}">Logout</a>
                         </div>
                     </li>
                 {% else %}
-                    <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authors:register' %}">Cadastrar<span class="sr-only">(current)</span></a>
+                    <li class="nav-item {{view_author_register}}">
+                    <a class="nav-link" href="{% url 'authors:register' %}">Cadastrar</a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="{% url 'authors:login' %}">Login<span class="sr-only">(current)</span></a>
+                    <li class="nav-item {{view_login}}">
+                    <a class="nav-link " href="{% url 'authors:login' %}">Login</a>
                     </li>
                 {% endif %}
                

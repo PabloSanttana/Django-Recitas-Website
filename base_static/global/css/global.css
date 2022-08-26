@@ -145,6 +145,9 @@ p{
     padding: 1rem;
 }
 
+.dropdown-item-hover:hover{
+    color: #343a40 !important;
+}
 @media (max-width: 600px) {
    
     .form-content-grid {

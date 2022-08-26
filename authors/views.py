@@ -23,6 +23,7 @@ def authors_register(request):
     return render(request, 'authors/pages/authors_register.html', {
         'form': form,
         'form_action': reverse('authors:register_create'),
+        'view_author_register': 'active'
     })
 
 
@@ -49,6 +50,7 @@ def login_view(request):
     return render(request, 'authors/pages/login.html', {
         'form': form,
         'form_action': reverse('authors:login_create'),
+        'view_login': 'active',
     })
 
 
@@ -95,7 +97,7 @@ def profile_view(request):
 @login_required(login_url='authors:login', redirect_field_name='next')
 def logout_view(request):
 
-    return render(request, 'authors/pages/logout.html')
+    return render(request, 'authors/pages/logout.html',)
 
 
 @login_required(login_url='authors:login', redirect_field_name='next')
