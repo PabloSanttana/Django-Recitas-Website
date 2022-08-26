@@ -18,10 +18,10 @@
                         {{request.user}}
                         </a>
                         <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:profile'%}">Perfil</a>
-                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:dashboard'%}">Dashboard</a>
-                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:create_recipe'%}">Criar Receitas</a>
-                        <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:logout'%}">Logout</a>
+                          <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:profile'%}">Perfil</a>
+                          <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:dashboard'%}">Dashboard</a>
+                          <a class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:create_recipe'%}">Criar Receitas</a>
+                          <a id="link_logout" aria-label="Logout" class="dropdown-item text-white dropdown-item-hover" href="{% url 'authors:logout'%}">Logout</a>
                         </div>
                     </li>
                 {% else %}
