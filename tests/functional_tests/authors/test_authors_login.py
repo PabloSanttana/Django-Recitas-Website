@@ -1,16 +1,9 @@
-from time import sleep
 from .base import AuthorBaseFunctionTestCase
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
 class AuthorsLoginFunctionTestCase(AuthorBaseFunctionTestCase):
-
-    def fill_form_dummy_data(self, form):
-        fields = form.find_elements(By.TAG_NAME, "input")
-        for field in fields:
-            if field.is_displayed():
-                field.send_keys(" " * 20)
 
     def form_user_login(self, form):
         self.get_by_name(form, "username").send_keys("rafaelaSantana")
