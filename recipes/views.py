@@ -7,7 +7,7 @@ from recipes.models import Recipe
 from utils.pagnation import make_pagination
 
 # Create your views here.
-
+# teste djanggo
 PER_PAGE = int(os.environ.get('PER_PAGE', 9))
 QTY_LINK_PAGE = int(os.environ.get('QTY_LINK_PAGE', 4))
 
